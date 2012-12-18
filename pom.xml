@@ -4,9 +4,9 @@
   <groupId>com.example</groupId>
   <artifactId>sjs</artifactId>
   <version>0.1</version>
-  <inceptionYear>2008</inceptionYear>
+  <packaging>war</packaging>
   <properties>
-    <scala.version>2.6.1</scala.version>
+    <scala.version>2.9.2</scala.version>
   </properties>
 
   <repositories>
