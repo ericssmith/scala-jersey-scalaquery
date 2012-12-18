@@ -19,7 +19,7 @@ public class TodoResourceTest extends JerseyTest{
         WebResource webResource = resource();
         String s = webResource.path("todos/1").get(String.class);
         System.out.print(s);
-        Assert.assertEquals("{\"title\":\"First todo\",\"description\":\"Do the first thing\",\"id\":\"1\"}", s);
+        Assert.assertEquals("{\"id\":\"1\",\"title\":\"First todo\",\"description\":\"Do the first thing\"}", s);
     }
 
 
