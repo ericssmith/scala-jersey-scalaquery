@@ -17,8 +17,20 @@ public class TodoResourceTest extends JerseyTest{
     @Test
     public void testTodoResource() throws Exception {
         WebResource webResource = resource();
-        String responseMsg = webResource.path("todos").get(String.class);
-        Assert.assertEquals("Hello World", responseMsg);
+        String s = webResource.path("todos/1").get(String.class);
+        System.out.print(s);
+        Assert.assertEquals("{\"title\":\"First todo\",\"description\":\"Do the first thing\",\"id\":\"1\"}", s);
+    }
+
+
+    @Test
+    public void testMultipleTodoResource() throws Exception {
+        WebResource webResource = resource();
+        String s = webResource.path("todos").accept("application/json").get(String.class);
+        //System.out.print(s);
+        Assert.assertEquals("listTodos", s);
+
+
     }
 
 }
