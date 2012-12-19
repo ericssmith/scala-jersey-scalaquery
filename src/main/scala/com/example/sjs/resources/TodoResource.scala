@@ -5,8 +5,11 @@ import javax.ws.rs._
 import com.example.sjs.beans.TodoBean
 import com.example.sjs.data.TodoDAO
 
+import javax.ws.rs.core.Response
+import javax.ws.rs.core.Response.Status
 import scala.collection.JavaConversions._
 import java.util.{List => JList}
+
 
 
 @Path("/todos")
@@ -25,9 +28,12 @@ class TodoResource {
   @Path("{id}")
   @GET
   @Produces(Array("application/json"))
-  def getTodo(@PathParam("id") id: String) : TodoBean = {
+  def getTodo(@PathParam("id") id: String) : Response = {
     val todo = dao.findById(id.toInt)
-    todo
+    todo match {
+      case Some(todo) => Response.ok(todo).build()
+      case None =>  Response.status(Status.NOT_FOUND).build()
+    }
   }
 
 

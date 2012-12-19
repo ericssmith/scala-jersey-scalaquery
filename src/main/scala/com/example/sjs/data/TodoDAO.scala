@@ -24,15 +24,21 @@ object TodoMap extends Table[(Int, String, String)]("todo") {
 class TodoDAO {
   val db  = getConnection
 
-  def findById(id: Int) : TodoBean = {
+  def findById(id: Int) : Option[TodoBean] = {
+    var result: Option[TodoBean] = None
     db withSession {
       val qry = for (t <- TodoMap if t.id is id) yield t.id ~ t.title ~ t.description
       val inter = qry mapResult {
-        case(id, title, description) => new TodoBean(id.toString, title, description)
+        case(id, title, description) => Option(new TodoBean(id.toString, title, description))
       }
-      val result = inter.first
-      result
+      //val result = inter.first
+      //result
+      result = inter.list match {
+        case _ :: tail => inter.first
+        case Nil => None
+      }
     }
+    result
   }
 
   def findAll() : JList[TodoBean] = {
