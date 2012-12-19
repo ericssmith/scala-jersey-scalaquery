@@ -3,10 +3,13 @@ package com.example.sjs.resources
 import javax.ws.rs.{PathParam, Produces, GET, Path}
 
 import com.example.sjs.beans.Todo
+import com.example.sjs.data.TodoDAO
 
 
 @Path("/todos")
 class TodoResource {
+
+  val dao = new TodoDAO
 
   @GET
   @Produces(Array("application/json"))
@@ -19,10 +22,8 @@ class TodoResource {
   @GET
   @Produces(Array("application/json"))
   def getTodo(@PathParam("id") id: String) : Todo = {
-
-    val todo = new Todo("1","First todo","Do the first thing")
+    val todo : Todo = dao.findById(id.toInt)
     todo
-
   }
 
 }
