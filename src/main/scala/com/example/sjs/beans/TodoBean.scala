@@ -4,12 +4,13 @@ import scala.reflect.BeanProperty
 import javax.xml.bind.annotation.{XmlType, XmlRootElement}
 
 
-@XmlRootElement
+@XmlRootElement(name="todo")
 @XmlType(propOrder = Array("id", "title", "description"))
-class Todo(@BeanProperty var id: String,
+class TodoBean(@BeanProperty var id: String,
            @BeanProperty var title: String,
            @BeanProperty var description: String) {
 
   private def this() = this("","","")
 
 }
+

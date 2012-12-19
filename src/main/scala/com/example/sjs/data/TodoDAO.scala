@@ -7,7 +7,10 @@ import org.scalaquery.session.Database.threadLocalSession
 import org.scalaquery.ql.TypeMapper._
 import org.scalaquery.ql.extended.MySQLDriver.Implicit._
 
-import com.example.sjs.beans.Todo
+import com.example.sjs.beans.TodoBean
+
+import scala.collection.JavaConversions._
+import java.util.{List => JList}
 
 
 object TodoMap extends Table[(Int, String, String)]("todo") {
@@ -20,15 +23,28 @@ object TodoMap extends Table[(Int, String, String)]("todo") {
 class TodoDAO {
   val db  = getConnection
 
-  def findById(id: Int) : Todo = {
+  def findById(id: Int) : TodoBean = {
     db withSession {
       val qry = for (t <- TodoMap if t.id is id) yield t.id ~ t.title ~ t.description
       val inter = qry mapResult {
-        case(id, title, description) => new Todo(id.toString, title, description)
+        case(id, title, description) => new TodoBean(id.toString, title, description)
       }
       val result = inter.first
       result
     }
   }
 
+  def findAll() : JList[TodoBean] = {
+    db withSession {
+      val qry = for (t <- TodoMap) yield t.id ~ t.title ~ t.description
+      //val results = qry.list
+      val inter = qry mapResult {
+        case(id, title, description) => new TodoBean(id.toString, title, description)
+      }
+      val results = seqAsJavaList(inter.list)
+      results
+    }
+  }
+
 }
+
