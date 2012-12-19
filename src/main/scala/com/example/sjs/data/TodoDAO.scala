@@ -58,5 +58,15 @@ class TodoDAO {
     createdTodo
   }
 
+  def update(todo: TodoBean) : TodoBean = {
+    db withSession {
+      val qry = for (t <- TodoMap if t.id is todo.id.toInt) yield t.title ~ t.description
+      val updated = qry.update(todo.title, todo.description)
+    }
+    val updatedTodo = new TodoBean(todo.id, todo.title, todo.description)
+    updatedTodo
+  }
+
+
 }
 

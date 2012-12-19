@@ -30,12 +30,23 @@ class TodoResource {
     todo
   }
 
+
   @POST
   @Consumes(Array("application/json"))
   @Produces(Array("application/json"))
   def postTodo(todo: TodoBean) : TodoBean = {
-    var createdTodo = dao.create(todo)
+    val createdTodo = dao.create(todo)
     createdTodo
+  }
+
+
+  @Path("{id}")
+  @PUT
+  @Consumes(Array("application/json"))
+  @Produces(Array("application/json"))
+  def updateTodo(todo: TodoBean) : TodoBean = {
+    val updatedTodo = dao.update(todo)
+    updatedTodo
   }
 
 
