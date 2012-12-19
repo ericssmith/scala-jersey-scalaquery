@@ -5,11 +5,10 @@ import javax.ws.rs._
 import com.example.sjs.beans.TodoBean
 import com.example.sjs.data.TodoDAO
 
-import javax.ws.rs.core.Response
+import core.{GenericEntity, Response}
 import javax.ws.rs.core.Response.Status
-import scala.collection.JavaConversions._
 import java.util.{List => JList}
-
+import java.util
 
 
 @Path("/todos")
@@ -19,9 +18,15 @@ class TodoResource {
 
   @GET
   @Produces(Array("application/json"))
-  def listTodos() : JList[TodoBean] = {
+  def listTodos() : Response = {
     val todos = dao.findAll()
-    todos
+    todos match {
+      case Some(todos) => {
+        val entity : GenericEntity[JList[TodoBean]] = new GenericEntity[util.List[TodoBean]](todos){}
+        Response.ok(entity).build()
+      }
+      case None => Response.status(Status.NOT_FOUND).build()
+    }
   }
 
 

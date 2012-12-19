@@ -31,8 +31,6 @@ class TodoDAO {
       val inter = qry mapResult {
         case(id, title, description) => Option(new TodoBean(id.toString, title, description))
       }
-      //val result = inter.first
-      //result
       result = inter.list match {
         case _ :: tail => inter.first
         case Nil => None
@@ -41,15 +39,19 @@ class TodoDAO {
     result
   }
 
-  def findAll() : JList[TodoBean] = {
+  def findAll() : Option[JList[TodoBean]] = {
+    var result: Option[JList[TodoBean]] = None
     db withSession {
       val qry = for (t <- TodoMap) yield t.id ~ t.title ~ t.description
       val inter = qry mapResult {
         case(id, title, description) => new TodoBean(id.toString, title, description)
       }
-      val results = seqAsJavaList(inter.list)
-      results
+      result = inter.list() match {
+        case Nil => None
+        case x => Option(seqAsJavaList(x))
+      }
     }
+    result
   }
 
 
