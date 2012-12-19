@@ -49,5 +49,10 @@ class TodoResource {
     updatedTodo
   }
 
+  @Path("{id}")
+  @DELETE
+  def remove(@PathParam("id") id: String) : Unit = {
+    dao.remove(id.toInt)
+  }
 
 }

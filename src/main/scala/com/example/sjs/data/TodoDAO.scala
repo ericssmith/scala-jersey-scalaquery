@@ -68,5 +68,12 @@ class TodoDAO {
   }
 
 
+  def remove(id: Int) : Unit = {
+    val toDelete = TodoMap where (_.id === id)
+    db withSession {
+      toDelete.delete
+    }
+  }
+
 }
 
