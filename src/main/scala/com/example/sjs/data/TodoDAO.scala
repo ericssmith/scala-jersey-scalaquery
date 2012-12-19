@@ -11,6 +11,7 @@ import com.example.sjs.beans.TodoBean
 
 import scala.collection.JavaConversions._
 import java.util.{List => JList}
+import org.scalaquery.ql.{SimpleFunction, Query}
 
 
 object TodoMap extends Table[(Int, String, String)]("todo") {
@@ -37,13 +38,24 @@ class TodoDAO {
   def findAll() : JList[TodoBean] = {
     db withSession {
       val qry = for (t <- TodoMap) yield t.id ~ t.title ~ t.description
-      //val results = qry.list
       val inter = qry mapResult {
         case(id, title, description) => new TodoBean(id.toString, title, description)
       }
       val results = seqAsJavaList(inter.list)
       results
     }
+  }
+
+
+  def create(todo: TodoBean) : TodoBean = {
+    var id: Int = -1
+    db withSession {
+      TodoMap.title ~ TodoMap.description insert(todo.title, todo.description)
+      val idQuery = Query(SimpleFunction.nullary[Int]("LAST_INSERT_ID"))
+      id = idQuery.list.head
+    }
+    val createdTodo = new TodoBean(id.toString, todo.title, todo.description)
+    createdTodo
   }
 
 }

@@ -1,6 +1,6 @@
 package com.example.sjs.resources
 
-import javax.ws.rs.{PathParam, Produces, GET, Path}
+import javax.ws.rs._
 
 import com.example.sjs.beans.TodoBean
 import com.example.sjs.data.TodoDAO
@@ -29,5 +29,14 @@ class TodoResource {
     val todo = dao.findById(id.toInt)
     todo
   }
+
+  @POST
+  @Consumes(Array("application/json"))
+  @Produces(Array("application/json"))
+  def postTodo(todo: TodoBean) : TodoBean = {
+    var createdTodo = dao.create(todo)
+    createdTodo
+  }
+
 
 }
