@@ -39,6 +39,7 @@ class TodoDAO {
     result
   }
 
+
   def findAll() : Option[JList[TodoBean]] = {
     var result: Option[JList[TodoBean]] = None
     db withSession {
@@ -65,6 +66,7 @@ class TodoDAO {
     val createdTodo = new TodoBean(id.toString, todo.title, todo.description)
     createdTodo
   }
+
 
   def update(todo: TodoBean) : TodoBean = {
     db withSession {

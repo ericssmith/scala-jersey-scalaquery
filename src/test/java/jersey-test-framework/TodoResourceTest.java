@@ -14,6 +14,7 @@ public class TodoResourceTest extends JerseyTest{
                 .build());
     }
 
+
     @Test
     public void testTodoResource() throws Exception {
         WebResource webResource = resource();
