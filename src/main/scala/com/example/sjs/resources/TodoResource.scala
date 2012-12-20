@@ -5,7 +5,7 @@ import javax.ws.rs._
 import com.example.sjs.beans.TodoBean
 import com.example.sjs.data.TodoDAO
 
-import core.{GenericEntity, Response}
+import javax.ws.rs.core.{GenericEntity,Response}
 import javax.ws.rs.core.Response.Status
 import java.util.{List => JList}
 import java.util
