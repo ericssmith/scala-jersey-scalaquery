@@ -1,7 +1,6 @@
 
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.core.servlet.WebAppResourceConfig;
 import com.sun.jersey.core.header.MediaTypes;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import com.sun.jersey.test.framework.JerseyTest;
