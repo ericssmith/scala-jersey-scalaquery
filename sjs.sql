@@ -10,4 +10,5 @@ CREATE TABLE `todo` (
 
 
 INSERT INTO `todo` (title,description) VALUES ('First Todo', 'Do the first thing');
+INSERT INTO `todo` (title,description) VALUES ('Second Todo', 'Do the second thing');
 

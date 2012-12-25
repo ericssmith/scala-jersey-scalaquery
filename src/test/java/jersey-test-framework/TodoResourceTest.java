@@ -73,10 +73,18 @@ public class TodoResourceTest extends JerseyTest{
 
 
     @Test
-    public void testMultipleTodoResource() throws Exception {
+    public void testListTodoResource() throws Exception {
         WebResource webResource = resource();
-//        String s = webResource.path("todos").accept("application/json").get(String.class);
-//        System.out.print(s);
+        WebResource url = webResource.path("todos");
+        try {
+            String s = url.accept("application/json").get(String.class);
+            System.out.print(s);
+//            Assert.assertEquals(dbTodoJSONString, s);
+        } catch (UniformInterfaceException e) {
+            // FIXME - Handle HTTP errors 300+ here
+            System.out.print(e);
+        }
+
     }
 
 
