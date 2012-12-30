@@ -13,6 +13,7 @@ import scala.Option;
 import scala.Some;
 
 import java.lang.*;
+import java.lang.AssertionError;
 import java.lang.IllegalAccessException;
 import java.lang.Integer;
 import java.lang.String;
@@ -79,7 +80,7 @@ public class TodoResourceTest extends JerseyTest{
         try {
             String s = url.accept("application/json").get(String.class);
             System.out.print(s);
-//            Assert.assertEquals(dbTodoJSONString, s);
+            Assert.assertTrue(s.startsWith("{\"todo\":"));
         } catch (UniformInterfaceException e) {
             // FIXME - Handle HTTP errors 300+ here
             System.out.print(e);
