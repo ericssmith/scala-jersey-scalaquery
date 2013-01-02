@@ -5,14 +5,18 @@ import javax.ws.rs._
 import com.example.sjs.beans.TodoBean
 import com.example.sjs.data.TodoDAO
 
-import javax.ws.rs.core.{GenericEntity,Response}
+import javax.ws.rs.core.{GenericEntity,Response,UriBuilder,Context,UriInfo}
 import javax.ws.rs.core.Response.Status
+import java.net.URI
 import java.util.{List => JList}
 import java.util
 
 
 @Path("/todos")
 class TodoResource {
+
+  @Context
+  val uriInfo: UriInfo = null
 
   val dao = new TodoDAO
 
@@ -45,9 +49,12 @@ class TodoResource {
   @POST
   @Consumes(Array("application/json"))
   @Produces(Array("application/json"))
-  def postTodo(todo: TodoBean) : TodoBean = {
+  def postTodo(todo: TodoBean) : Response = {
     val createdTodo = dao.create(todo)
-    createdTodo
+    val id = createdTodo.getId()
+    val ub: UriBuilder = uriInfo.getAbsolutePathBuilder()
+    val todoUri: URI = ub.path(createdTodo.getId()).build()
+    return Response.created(todoUri).entity(createdTodo).build()
   }
 
 
